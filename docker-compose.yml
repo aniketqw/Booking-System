@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    command: uvicorn Application_server.Application_server:app --host 0.0.0.0 --port 9000 --log-level info
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - raft
+      - llm
+
+  raft:
+    build: .
+    command: /app/scripts/start_raft_nodes.sh
+    ports:
+      - "50051:50051"
+      - "50052:50052"
+      - "50053:50053"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  llm:
+    build: .
+    command: uvicorn llm.llm_server:app --host 0.0.0.0 --port 8500 --log-level info
+    ports:
+      - "8500:8500"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
