@@ -2,7 +2,7 @@ fastapi==0.95.2
 uvicorn[standard]==0.22.0
 requests==2.31.0
 grpcio==1.57.0
-protobuf==4.24.6
+protobuf==4.24.4
 grpcio-tools==1.57.0
 customtkinter==6.4.2
 pytest==7.4.0
